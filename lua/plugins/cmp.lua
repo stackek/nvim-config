@@ -13,6 +13,24 @@ return {
     config = function()
       local cmp = require("cmp")
 
+        local function jump_next(fallback)
+          local luasnip = require "luasnip"
+          if luasnip.locally_jumpable(1) then
+            return luasnip.jump(1)
+          else
+            return fallback()
+          end
+        end
+
+        local function jump_prev(fallback)
+          local luasnip = require "luasnip"
+          if luasnip.locally_jumpable(-1) then
+            return luasnip.jump(-1)
+          else
+            return fallback()
+          end
+        end
+
       cmp.setup({
         snippet = {
           expand = function(args)
@@ -22,8 +40,8 @@ return {
         mapping = cmp.mapping.preset.insert({
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
-          -- ["<Tab>"] = cmp.mapping.select_next_item(),
-          -- ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+          ["<Tab>"] = cmp.mapping(jump_next, { "i", "s" }),
+          ["<S-Tab>"] = cmp.mapping(jump_prev, { "i", "s" }),
         }),
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
