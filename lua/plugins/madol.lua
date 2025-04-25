@@ -1,17 +1,18 @@
 return{
     {
 	'https://gitlab.com/repetitivesin/madol.nvim',
-        dependencies = { "L3MON4D3/LuaSnip", "nvim-treesitter/nvim-treesitter" },
+        dependencies = { "L3MON4D3/LuaSnip", "rafamadriz/friendly-snippets", "nvim-treesitter/nvim-treesitter" },
         config = function()
+        require("luasnip.loaders.from_vscode").lazy_load()
         local ls = require("luasnip")
-        ls.config.setup({
+            ls.config.setup({
             enable_autosnippets = true,
             store_selection_keys = "<Tab>",
         })
 
         function my_markdown_snippets(is_math, not_math)
           local snippets = {}
-          local t = ls.text_node
+          -- local t = ls.text_node
           local i = ls.insert_node
           local _local_1_ = require("luasnip.extras.fmt") local fmta = _local_1_["fmta"]
           local ss = ls.extend_decorator.apply(ls.snippet, {condition = not_math, snippetType = "autosnippet"})
@@ -36,6 +37,12 @@ return{
             "::: {.lemma title=\"<>\" ref=\"<>\"}\n<>\n:::",
             {i(1), i(2), i(3)}
           ))
+
+          s({trig = "cdd", name = "Code Block"}, fmta(
+            "```<>\n<>\n```",
+            {i(1), i(2)}
+          ))
+
            return snippets
         end
 
@@ -45,6 +52,7 @@ return{
                   -- Reminder: without brackets, my_markdown_snippets would be treated as
                   -- string
                   [my_markdown_snippets] = true,
+                  ["image-pasting"] = true,
                 },
               },
         })
