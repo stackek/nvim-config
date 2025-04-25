@@ -1,13 +1,13 @@
-return{
+return {
     {
 	'https://gitlab.com/repetitivesin/madol.nvim',
-        dependencies = { "L3MON4D3/LuaSnip", "rafamadriz/friendly-snippets", "nvim-treesitter/nvim-treesitter" },
+        dependencies = { "L3MON4D3/LuaSnip", "nvim-treesitter/nvim-treesitter" },
         config = function()
-        require("luasnip.loaders.from_vscode").lazy_load()
         local ls = require("luasnip")
-            ls.config.setup({
-            enable_autosnippets = true,
-            store_selection_keys = "<Tab>",
+
+        ls.config.setup({
+        enable_autosnippets = true,
+        store_selection_keys = "<Tab>",
         })
 
         function my_markdown_snippets(is_math, not_math)

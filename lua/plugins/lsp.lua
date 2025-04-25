@@ -18,7 +18,7 @@ return {
     config = function()
         require('mason-lspconfig').setup({
             -- A list of servers to automatically install if they're not already installed
-            ensure_installed = {'basedpyright', 'lua_ls', 'clangd', 'marksman'},
+            ensure_installed = {'r_language_server', 'basedpyright', 'lua_ls', 'clangd', 'marksman'},
         })
     end
   },
