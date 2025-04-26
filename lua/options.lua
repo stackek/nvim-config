@@ -23,3 +23,10 @@ vim.opt.incsearch = true            -- search as characters are entered
 vim.opt.hlsearch = true            -- highlight matches
 vim.opt.ignorecase = true           -- ignore case in searches by default
 vim.opt.smartcase = true            -- but make it case sensitive if an uppercase is entered
+
+-- disable trailing comment when entering newline
+vim.api.nvim_create_autocmd("BufEnter", {
+  callback = function()
+    vim.opt.formatoptions:remove({"c", "r", "o"})
+  end,
+})

@@ -9,9 +9,9 @@ return {
       require("otter").setup()
 
       vim.api.nvim_create_autocmd("BufReadPost", {
-        pattern = "*.md",
+        pattern = { "*.md", "*.qmd" },
         callback = function()
-          require("otter").activate({ "python", "lua", "bash", "cpp" })
+          require("otter").activate({"R", "python", "lua", "bash", "cpp" })
         end,
       })
     end,

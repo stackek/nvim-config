@@ -6,8 +6,8 @@ return {
             ui = {
                 icons = {
                     package_installed = "✓",
-                    package_pending = "➜",
-                    package_uninstalled = "✗"
+                    package_pending = "->",
+                    package_uninstalled = "x"
                 }
             }
         })
@@ -40,6 +40,8 @@ return {
         require'lspconfig'.clangd.setup{
         }
         require'lspconfig'.marksman.setup{
+        }
+        require'lspconfig'.r_language_server.setup{
         }
 
     end
