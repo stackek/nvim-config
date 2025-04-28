@@ -15,7 +15,6 @@ vim.opt.relativenumber = true       -- add numbers to each line on the left side
 vim.opt.cursorline = true           -- highlight cursor line underneath the cursor horizontally
 vim.opt.splitbelow = true           -- open new vertical split bottom
 vim.opt.splitright = true           -- open new horizontal splits right
--- vim.opt.termguicolors = true        -- enabl 24-bit RGB color in the TUI
 vim.opt.showmode = false            -- we are experienced, wo don't need the "-- INSERT --" mode hint
 
 -- Searching
@@ -24,9 +23,33 @@ vim.opt.hlsearch = true            -- highlight matches
 vim.opt.ignorecase = true           -- ignore case in searches by default
 vim.opt.smartcase = true            -- but make it case sensitive if an uppercase is entered
 
+
 -- disable trailing comment when entering newline
 vim.api.nvim_create_autocmd("BufEnter", {
   callback = function()
     vim.opt.formatoptions:remove({"c", "r", "o"})
   end,
 })
+
+-- Define a global variable to track the state
+vim.g.md2pdf_enabled = 0
+
+-- Command to toggle the behavior on or off
+vim.api.nvim_create_user_command('TogglePandla', function()
+    if vim.g.md2pdf_enabled == 0 then
+        vim.g.md2pdf_enabled = 1
+        print("Markdown to PDF auto-compiling ENABLED")
+        -- Add the autocommand for .md files to trigger on save
+        vim.api.nvim_create_augroup('md2pdf_on_save', { clear = true })
+        vim.api.nvim_create_autocmd('BufWritePost', {
+            group = 'md2pdf_on_save',
+            pattern = '*.md',
+            command = 'silent !fish -c \'pandla % --template=eisvogeln --lua-filter=/home/gwegus/.local/share/pandoc/templates/blocks.lua\''
+        })
+    else
+        vim.g.md2pdf_enabled = 0
+        print("Markdown to PDF auto-compiling DISABLED")
+        -- Remove the autocommand
+        vim.api.nvim_del_augroup_by_name('md2pdf_on_save')
+    end
+end, {})

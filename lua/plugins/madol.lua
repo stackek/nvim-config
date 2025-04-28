@@ -33,14 +33,29 @@ return {
             {i(1), i(2), i(3)}
           ))
 
-          s({trig = "lmm", name = "Lemma Block"}, fmta(
+          s({trig = "lmm", name = "Lemma block"}, fmta(
             "::: {.lemma title=\"<>\" ref=\"<>\"}\n<>\n:::",
+            {i(1), i(2), i(3)}
+          ))
+
+          s({trig = "pmm", name = "Proof block"}, fmta(
+            "::: {.proof title=\"<>\" ref=\"<>\"}\n<>\n:::",
+            {i(1), i(2), i(3)}
+          ))
+
+          s({trig = "dff", name = "Definition block"}, fmta(
+            "::: {.definition title=\"<>\" ref=\"<>\"}\n<>\n:::",
             {i(1), i(2), i(3)}
           ))
 
           s({trig = "cdd", name = "Code Block"}, fmta(
             "```<>\n<>\n```",
             {i(1), i(2)}
+          ))
+
+          s({trig = "rff", name = "Reference"}, fmta(
+            "\\cref{<>}",
+            {i(1)}
           ))
 
            return snippets
