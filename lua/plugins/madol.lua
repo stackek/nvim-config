@@ -12,50 +12,58 @@ return {
 
         function my_markdown_snippets(is_math, not_math)
           local snippets = {}
-          -- local t = ls.text_node
+          local t = ls.text_node
           local i = ls.insert_node
           local _local_1_ = require("luasnip.extras.fmt") local fmta = _local_1_["fmta"]
-          local ss = ls.extend_decorator.apply(ls.snippet, {condition = not_math, snippetType = "autosnippet"})
+          local ssm = ls.extend_decorator.apply(ls.snippet, {condition = is_math, snippetType = "autosnippet"})
+          local ssn = ls.extend_decorator.apply(ls.snippet, {condition = not_math, snippetType = "autosnippet"})
 
-          local function s(...) return table.insert(snippets, ss(...)) end
-          s({trig = "cmm", name = "Caution Block"}, fmta(
+          local function sm(...) return table.insert(snippets, ssm(...)) end
+          local function sn(...) return table.insert(snippets, ssn(...)) end
+          sn({trig = "cmm", name = "Caution Block"}, fmta(
             "::: {.caution title=\"<>\" ref=\"<>\"}\n<>\n:::",
             {i(1), i(2), i(3)}
           ))
 
-          s({trig = "tmm", name = "Theorem Block"}, fmta(
+          sn({trig = "tmm", name = "Theorem Block"}, fmta(
             "::: {.theorem title=\"<>\" ref=\"<>\"}\n<>\n:::",
             {i(1), i(2), i(3)}
           ))
 
-          s({trig = "emm", name = "Example Block"}, fmta(
+          sn({trig = "emm", name = "Example Block"}, fmta(
             "::: {.example title=\"<>\" ref=\"<>\"}\n<>\n:::",
             {i(1), i(2), i(3)}
           ))
 
-          s({trig = "lmm", name = "Lemma block"}, fmta(
+          sn({trig = "lmm", name = "Lemma block"}, fmta(
             "::: {.lemma title=\"<>\" ref=\"<>\"}\n<>\n:::",
             {i(1), i(2), i(3)}
           ))
 
-          s({trig = "pmm", name = "Proof block"}, fmta(
+          sn({trig = "pmm", name = "Proof block"}, fmta(
             "::: {.proof title=\"<>\" ref=\"<>\"}\n<>\n:::",
             {i(1), i(2), i(3)}
           ))
 
-          s({trig = "dff", name = "Definition block"}, fmta(
+          sn({trig = "dff", name = "Definition block"}, fmta(
             "::: {.definition title=\"<>\" ref=\"<>\"}\n<>\n:::",
             {i(1), i(2), i(3)}
           ))
 
-          s({trig = "cdd", name = "Code Block"}, fmta(
+          sn({trig = "cdd", name = "Code Block"}, fmta(
             "```<>\n<>\n```",
             {i(1), i(2)}
           ))
 
-          s({trig = "rff", name = "Reference"}, fmta(
+          sn({trig = "rff", name = "Reference"}, fmta(
             "\\cref{<>}",
             {i(1)}
+          ))
+
+
+          sm({trig = "~=", name = "Approximately equal"}, t(
+            "\\approx",
+            {}
           ))
 
            return snippets

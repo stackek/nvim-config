@@ -35,20 +35,32 @@ vim.api.nvim_create_autocmd("BufEnter", {
 vim.g.md2pdf_enabled = 0
 
 -- Command to toggle the behavior on or off
-vim.api.nvim_create_user_command('TogglePandla', function()
+vim.api.nvim_create_user_command('TogglePandoc', function()
     if vim.g.md2pdf_enabled == 0 then
         vim.g.md2pdf_enabled = 1
-        print("Markdown to PDF auto-compiling ENABLED")
+        print("Markdown to Latex auto-compiling ENABLED")
         -- Add the autocommand for .md files to trigger on save
         vim.api.nvim_create_augroup('md2pdf_on_save', { clear = true })
         vim.api.nvim_create_autocmd('BufWritePost', {
             group = 'md2pdf_on_save',
             pattern = '*.md',
-            command = 'silent !fish -c \'pandla % --template=eisvogeln --lua-filter=/home/gwegus/.local/share/pandoc/templates/blocks.lua\''
+            callback = function()
+                local input_file = vim.fn.expand('%')
+                local output_file = vim.fn.expand('%:r') .. '.latex'
+                local file_dir = vim.fn.expand('%:p:h')
+                local defaults_path = file_dir .. '/../pandoc/defaults.yaml'
+                local cmd = string.format(
+                    "!fish -c 'pandoc %s -o %s --defaults \"%s\" --standalone --embed-resources'",
+                    input_file,
+                    output_file,
+                    defaults_path
+                )
+                vim.cmd(cmd)
+            end
         })
     else
         vim.g.md2pdf_enabled = 0
-        print("Markdown to PDF auto-compiling DISABLED")
+        print("Markdown to Latex auto-compiling DISABLED")
         -- Remove the autocommand
         vim.api.nvim_del_augroup_by_name('md2pdf_on_save')
     end
