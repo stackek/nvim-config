@@ -30,7 +30,7 @@ vim.keymap.set('n', '<C-Right>', ':vertical resize +2<CR>', opts)
 vim.keymap.set('v', '<', '<gv', opts)
 vim.keymap.set('v', '>', '>gv', opts)
 
--- Insert only the date (YYYY-MM-DD)
+-- Insert date (YYYY-MM-DD)
 vim.keymap.set('n', '<leader>dd', function()
   local date = os.date("%Y-%m-%d")
   vim.api.nvim_put({date}, 'c', true, true)

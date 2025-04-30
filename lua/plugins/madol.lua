@@ -20,6 +20,8 @@ return {
 
           local function sm(...) return table.insert(snippets, ssm(...)) end
           local function sn(...) return table.insert(snippets, ssn(...)) end
+
+          --Non-math snippets
           sn({trig = "cmm", name = "Caution Block"}, fmta(
             "::: {.caution title=\"<>\" ref=\"<>\"}\n<>\n:::",
             {i(1), i(2), i(3)}
@@ -56,13 +58,23 @@ return {
           ))
 
           sn({trig = "rff", name = "Reference"}, fmta(
-            "\\cref{<>}",
+            "\\ref{<>}",
             {i(1)}
           ))
 
+          sn({trig = "bbb", name = "Bold"}, fmta(
+            "**<>**",
+            {i(1)}
+          ))
 
-          sm({trig = "~=", name = "Approximately equal"}, t(
-            "\\approx",
+          sn({trig = "iii", name = "Italic"}, fmta(
+            "*<>*",
+            {i(1)}
+          ))
+
+          --Math snippets
+          sm({trig = "appr", name = "Approximately equal"}, t(
+            "\\approx ",
             {}
           ))
 
@@ -94,12 +106,6 @@ return {
                 return "<C-k>"
             end
         end, { silent = true })
-        -- vim.keymap.set({ "i", "s" }, "<Tab>", function()
-        --     ls.jump(1)
-        -- end, { silent = true })
-        -- vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
-        --     ls.jump(-1)
-        -- end, { silent = true })
         end,
     }
 }
