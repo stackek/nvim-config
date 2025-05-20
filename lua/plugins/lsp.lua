@@ -18,16 +18,17 @@ return {
     config = function()
         require('mason-lspconfig').setup({
             -- A list of servers to automatically install if they're not already installed
-            ensure_installed = {'r_language_server', 'basedpyright', 'lua_ls', 'clangd', 'marksman'},
+            ensure_installed = {'r_language_server', 'basedpyright', 'lua_ls', 'clangd',  'matlab_ls'},
         })
     end
   },
   {
     "neovim/nvim-lspconfig",
+    experimental = { ghost_text = true },
     config = function()
+
             --initializing servers in nvim session
-        require'lspconfig'.basedpyright.setup{
-        }
+        require'lspconfig'.basedpyright.setup{ }
         require'lspconfig'.lua_ls.setup{
             settings = {
                     Lua = {
@@ -37,13 +38,41 @@ return {
                     }
                 }
         }
-        require'lspconfig'.clangd.setup{
-        }
-        require'lspconfig'.marksman.setup{
-        }
-        require'lspconfig'.r_language_server.setup{
+        require'lspconfig'.clangd.setup{ }
+        require'lspconfig'.r_language_server.setup{ }
+        require"lspconfig".matlab_ls.setup{}
+
+    end,
+    vim.diagnostic.config({
+      virtual_text = true,
+      signs = true,
+      update_in_insert = false,
+      underline = true,
+      severity_sort = false,
+      float = true,
+    })
+
+  },
+  {
+    "ray-x/lsp_signature.nvim",
+    config = function ()
+        local signature_config = {
+          debug = true,
+          hint_enable = false,
+          handler_opts = { border = "single" },
+          max_width = 80,
         }
 
-    end
+        require("lsp_signature").setup(signature_config)
+        local capabilities = vim.lsp.protocol.make_client_capabilities()
+        capabilities.textDocument.completion.completionItem.snippetSupport = true
+        capabilities.textDocument.completion.completionItem.resolveSupport = {
+          properties = { "documentation", "detail", "additionalTextEdits" },
+        }
+
+        require("lspconfig").gopls.setup({ capabilities = capabilities })
+        require("lspconfig").clangd.setup({ capabilities = capabilities })
+        vim.cmd([[set mouse=a]])
+        end,
   },
 }
