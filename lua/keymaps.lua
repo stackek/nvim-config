@@ -22,6 +22,7 @@ vim.keymap.set('n', '<C-Down>', ':resize +2<CR>', opts)
 vim.keymap.set('n', '<C-Left>', ':vertical resize -2<CR>', opts)
 vim.keymap.set('n', '<C-Right>', ':vertical resize +2<CR>', opts)
 
+vim.keymap.set('n', '<Leader>lr', ':Telescope lsp_references<CR>', opts)
 -----------------
 -- Visual mode --
 -----------------
@@ -30,14 +31,5 @@ vim.keymap.set('n', '<C-Right>', ':vertical resize +2<CR>', opts)
 vim.keymap.set('v', '<', '<gv', opts)
 vim.keymap.set('v', '>', '>gv', opts)
 
--- Insert date (YYYY-MM-DD)
-vim.keymap.set('n', '<leader>dd', function()
-  local date = os.date("%Y-%m-%d")
-  vim.api.nvim_put({date}, 'c', true, true)
-end, { desc = 'Insert current date' })
-
--- Insert date and time (YYYY-MM-DD HH:MM:SS)
-vim.keymap.set('n', '<leader>dt', function()
-  local datetime = os.date("%Y-%m-%d %H:%M:%S")
-  vim.api.nvim_put({datetime}, 'c', true, true)
-end, { desc = 'Insert current date and time' })
+-- Date insertion
+vim.cmd('let @d = strftime("%Y-%m-%d")')
