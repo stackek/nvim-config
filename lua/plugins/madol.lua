@@ -52,6 +52,11 @@ return {
             {i(1), i(2), i(3)}
           ))
 
+          sn({trig = "nmm", name = "Notes block"}, fmta(
+            "::: {.notes}\n<>\n:::",
+            {i(1)}
+          ))
+
           sn({trig = "cdd", name = "Code Block"}, fmta(
             "```<>\n<>\n```",
             {i(1), i(2)}
@@ -83,6 +88,14 @@ return {
 
         require("madol").setup({
             markdown = {
+                snippets = {
+                  -- Reminder: without brackets, my_markdown_snippets would be treated as
+                  -- string
+                  [my_markdown_snippets] = true,
+                  ["image-pasting"] = true,
+                },
+              },
+            quarto = {
                 snippets = {
                   -- Reminder: without brackets, my_markdown_snippets would be treated as
                   -- string
