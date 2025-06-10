@@ -58,3 +58,7 @@ vim.api.nvim_create_user_command('TogglePandoc', function(opts)
 end, {
     nargs = '?'
 })
+
+
+--Text autoformat
+vim.cmd('set textwidth=80')
