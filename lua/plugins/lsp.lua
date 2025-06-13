@@ -20,6 +20,16 @@ return {
             -- A list of servers to automatically install if they're not already installed
             ensure_installed = {'r_language_server', 'basedpyright', 'lua_ls', 'clangd',  'matlab_ls'},
         })
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = 'fish',
+      callback = function()
+        vim.lsp.start({
+          name = 'fish-lsp',
+          cmd = { 'fish-lsp', 'start' },
+          cmd_env = { fish_lsp_show_client_popups = false },
+        })
+      end,
+})
     end
   },
   {
@@ -28,7 +38,7 @@ return {
     config = function()
 
             --initializing servers in nvim session
-        require'lspconfig'.basedpyright.setup{ }
+        require'lspconfig'.basedpyright.setup{}
         require'lspconfig'.lua_ls.setup{
             settings = {
                     Lua = {
@@ -38,8 +48,8 @@ return {
                     }
                 }
         }
-        require'lspconfig'.clangd.setup{ }
-        require'lspconfig'.r_language_server.setup{ }
+        require'lspconfig'.clangd.setup{}
+        require'lspconfig'.r_language_server.setup{}
         require"lspconfig".matlab_ls.setup{}
 
     end,
