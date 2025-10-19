@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "clang": "^1.0.9",
-    "clangd": "^0.0.0"
-  }
-}
