@@ -62,3 +62,5 @@ end, {
 
 --Text autoformat
 vim.cmd('set textwidth=80')
+
+vim.g.terminal_emulator='kitty'
