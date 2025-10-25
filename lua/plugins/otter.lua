@@ -1,3 +1,4 @@
+-- lsp features for code embedded in text documents
 return {
   {
     "jmbuhr/otter.nvim",

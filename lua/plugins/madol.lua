@@ -67,16 +67,6 @@ return {
             {i(1)}
           ))
 
-          sn({trig = "bbb", name = "Bold"}, fmta(
-            "**<>**",
-            {i(1)}
-          ))
-
-          sn({trig = "iii", name = "Italic"}, fmta(
-            "*<>*",
-            {i(1)}
-          ))
-
           --Math snippets
           sm({trig = "appr", name = "Approximately equal"}, t(
             "\\approx ",
